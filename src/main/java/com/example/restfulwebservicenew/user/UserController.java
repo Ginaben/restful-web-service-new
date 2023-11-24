@@ -22,9 +22,18 @@ public class UserController {
     }
 
     //Get /user/1 or /users/10 -> String
+//    @GetMapping("/users/{id}")
+//    public User retrieveUser(@PathVariable int id) {
+//        return service.findOne(id);
+//    }
+
     @GetMapping("/users/{id}")
     public User retrieveUser(@PathVariable int id) {
-        return service.findOne(id);
+        User user = service.findOne(id);
+        if (user == null) {
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
+        return user;
     }
 
     @PostMapping("/users")

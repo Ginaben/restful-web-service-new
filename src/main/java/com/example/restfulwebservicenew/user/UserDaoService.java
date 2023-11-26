@@ -2,9 +2,12 @@ package com.example.restfulwebservicenew.user;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 //@Component
@@ -40,5 +43,22 @@ public class UserDaoService {
         }
         return null;
     }
+
+    public User deleteById(int id) {
+        Iterator<User> iterator = users.iterator();
+        //리스트 형태의 데이터 값을 순차적으로 접근해서 사용하기 위한 열거형 타입의 데이터를 이터레이터라고 함
+        while (iterator.hasNext()) {
+            User user = iterator.next();
+
+            if (user.getId() == id) {
+                iterator.remove();
+                return user;
+            }
+        }
+
+        return  null;
+    }
+
+
 }
 

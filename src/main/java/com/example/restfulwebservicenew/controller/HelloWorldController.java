@@ -1,6 +1,6 @@
-package com.example.restfulwebservicenew.helloworld;
+package com.example.restfulwebservicenew.controller;
 
-import org.aspectj.bridge.Message;
+import com.example.restfulwebservicenew.bean.HelloWorldBean;
 import org.springframework.context.MessageSource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

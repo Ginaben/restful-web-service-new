@@ -1,9 +1,7 @@
-package com.example.restfulwebservicenew.user;
+package com.example.restfulwebservicenew.dao;
 
-import org.springframework.stereotype.Component;
+import com.example.restfulwebservicenew.bean.User;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -18,9 +16,9 @@ public class UserDaoService {
     private static int userCount = 3;
 
     static {
-        users.add(new User(1, "Benzam", new Date()));
-        users.add(new User(2, "Wooya", new Date()));
-        users.add(new User(3, "Gina", new Date()));
+        users.add(new User(1, "Benzam", new Date(), "test1", "111111-1111111"));
+        users.add(new User(2, "Wooya", new Date(), "test1", "111111-1111111"));
+        users.add(new User(3, "Gina", new Date(), "test1", "111111-1111111"));
     }
 
     public List<User> findAll() {

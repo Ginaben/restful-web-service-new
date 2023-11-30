@@ -1,5 +1,8 @@
-package com.example.restfulwebservicenew.user;
+package com.example.restfulwebservicenew.controller;
 
+import com.example.restfulwebservicenew.bean.User;
+import com.example.restfulwebservicenew.dao.UserDaoService;
+import com.example.restfulwebservicenew.user.UserNotFoundException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -7,7 +10,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
-import java.util.Locale;
 
 @RestController
 public class UserController {

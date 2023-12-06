@@ -3,13 +3,19 @@ package com.example.restfulwebservicenew.controller;
 import com.example.restfulwebservicenew.bean.User;
 import com.example.restfulwebservicenew.dao.UserDaoService;
 import com.example.restfulwebservicenew.user.UserNotFoundException;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import javax.swing.text.html.parser.Entity;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 public class UserController {
@@ -30,14 +36,28 @@ public class UserController {
 //    public User retrieveUser(@PathVariable int id) {
 //        return service.findOne(id);
 //    }
+//    @GetMapping("/users/{id}")
+//    public User retrieveUser(@PathVariable int id) {
+//        User user = service.findOne(id);
+//        if (user == null) {
+//            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+//        }
+//        return user;
+//    }
 
     @GetMapping("/users/{id}")
-    public User retrieveUser(@PathVariable int id) {
+    public EntityModel<User> retrieveUser(@PathVariable int id) {
         User user = service.findOne(id);
         if (user == null) {
             throw new UserNotFoundException(String.format("ID[%s] not found", id));
         }
-        return user;
+
+        EntityModel entityModel = EntityModel.of(user);
+
+        WebMvcLinkBuilder linTo = linkTo(methodOn(this.getClass()).retrieveAllUsers());
+        entityModel.add(linTo.withRel("all-users")); // all users -> http://localhost:8080/users
+
+        return entityModel;
     }
 
     @PostMapping("/users")

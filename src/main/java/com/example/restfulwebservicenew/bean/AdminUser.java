@@ -6,8 +6,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
+import jakarta.validation.constraints.Past;
+import jakarta.validation.constraints.Size;
+
 import java.util.Date;
 
 @Data
@@ -16,7 +17,7 @@ import java.util.Date;
 @JsonFilter("UserInfo")
 public class AdminUser {
     private Integer id;
-    @Size(min=2, message = "Name은 두글자 이상 입력해주세요.")
+    @Size(min = 2, message = "Name은 두글자 이상 입력해주세요.")
     private String name;
     @Past(message = "등록일은 미래 날짜를 입력하실 수 없습니다.")
     private Date joinDate;

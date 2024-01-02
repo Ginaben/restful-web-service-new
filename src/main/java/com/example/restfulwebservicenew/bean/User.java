@@ -2,10 +2,7 @@ package com.example.restfulwebservicenew.bean;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -14,6 +11,7 @@ import jakarta.validation.constraints.Size;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor //모든 필드에 대해 파라미터로 갖는 생성자
@@ -42,4 +40,15 @@ public class User{
 //    @JsonIgnore
     @Schema(title="사용자 비밀번호", description = "사용자 비밀번호를 입력합니다.")
     private String ssn;
+
+    @OneToMany(mappedBy = "user")
+    private List<Post> posts;
+
+    public User(Integer id, String name, Date joinDate, String password, String ssn) {
+        this.id = id;
+        this.name = name;
+        this.joinDate = joinDate;
+        this.password = password;
+        this.ssn = ssn;
+    }
 }

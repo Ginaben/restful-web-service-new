@@ -2,6 +2,7 @@ package com.example.restfulwebservicenew.controller;
 
 import com.example.restfulwebservicenew.bean.Post;
 import com.example.restfulwebservicenew.bean.User;
+import com.example.restfulwebservicenew.repository.PostRepository;
 import com.example.restfulwebservicenew.repository.UserRepository;
 import com.example.restfulwebservicenew.user.UserNotFoundException;
 import jakarta.validation.Valid;
@@ -22,6 +23,7 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 @RequestMapping("/jpa")
 public class UserJpaController {
     private UserRepository userRepository;
+    private PostRepository postRepository;
 
     public UserJpaController(UserRepository userRepository) {
         this.userRepository = userRepository;
@@ -76,6 +78,27 @@ public class UserJpaController {
         }
 
         return user.get().getPosts();
+    }
+
+    @PostMapping("/users/{id}/posts")
+    public ResponseEntity createPost(@PathVariable int id, @RequestBody Post post) {
+        Optional<User> userOptional = userRepository.findById(id);
+        if (!userOptional.isPresent()) {
+            throw new UserNotFoundException("id=" + id);
+        }
+
+        User user = userOptional.get();
+
+        post.setUser(user);
+
+        postRepository.save(post);
+
+        URI location = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path("/{id}")
+                .buildAndExpand(post.getId())
+                .toUri();
+
+        return ResponseEntity.created(location).build();
     }
 
 }
